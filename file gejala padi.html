@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosis Penyakit Tanaman</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e7f3fe;
+            border: 1px solid #b3d4fc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diagnosis Penyakit Tanaman</h1>
+        <p>Pilih gejala yang sesuai:</p>
+        <form id="symptomsForm">
+            <label><input type="checkbox" name="symptom" value="bercak basah"> Bercak basah</label><br>
+            <label><input type="checkbox" name="symptom" value="daun menguning"> Daun menguning</label><br>
+            <label><input type="checkbox" name="symptom" value="batang lunak"> Batang lunak</label><br>
+            <label><input type="checkbox" name="symptom" value="bau busuk"> Bau busuk</label><br>
+            <label><input type="checkbox" name="symptom" value="pertumbuhan terhambat"> Pertumbuhan terhambat</label><br>
+            <label><input type="checkbox" name="symptom" value="penyebaran cepat"> Penyebaran cepat</label><br>
+            <label><input type="checkbox" name="symptom" value="daun keriting"> Daun keriting</label><br>
+            <label><input type="checkbox" name="symptom" value="rambut akar berkurang"> Rambut akar berkurang</label><br>
+            <label><input type="checkbox" name="symptom" value="pembentukan bulir berkurang"> Pembentukan bulir berkurang</label><br>
+            <label><input type="checkbox" name="symptom" value="tanaman rentan hama"> Tanaman rentan hama</label><br>
+            <label><input type="checkbox" name="symptom" value="kerdil"> Kerdil</label><br>
+            <label><input type="checkbox" name="symptom" value="daun menggulung"> Daun menggulung</label><br>
+            <label><input type="checkbox" name="symptom" value="malai pendek"> Malai pendek</label><br>
+            <label><input type="checkbox" name="symptom" value="pangkal batang busuk"> Pangkal batang busuk</label><br>
+            <label><input type="checkbox" name="symptom" value="akar membusuk"> Akar membusuk</label><br>
+            <label><input type="checkbox" name="symptom" value="kematian tanaman"> Kematian tanaman</label><br>
+            <label><input type="checkbox" name="symptom" value="bulir berwarna hijau gelap"> Bulir berwarna hijau gelap</label><br>
+            <label><input type="checkbox" name="symptom" value="bercak coklat pada daun"> Bercak coklat pada daun</label><br>
+            <label><input type="checkbox" name="symptom" value="daun mengering"> Daun mengering</label><br>
+            <label><input type="checkbox" name="symptom" value="tanaman kerdil"> Tanaman kerdil</label><br>
+            <label><input type="checkbox" name="symptom" value="bercak kuning pada daun"> Bercak kuning pada daun</label><br>
+            <label><input type="checkbox" name="symptom" value="pustula berwarna kuning"> Pustula berwarna kuning</label><br>
+            <label><input type="checkbox" name="symptom" value="garis sempit pada daun"> Garis sempit pada daun</label><br>
+            <label><input type="checkbox" name="symptom" value="garis membesar pada batang"> Garis membesar pada batang</label><br>
+            <label><input type="checkbox" name="symptom" value="kebocoran cairan kuning"> Kebocoran cairan kuning</label><br>
+            <label><input type="checkbox" name="symptom" value="bercak coklat"> Bercak coklat</label><br>
+            <label><input type="checkbox" name="symptom" value="tanaman kering"> Tanaman kering</label><br>
+            <label><input type="checkbox" name="symptom" value="berat biji menurun"> Berat biji menurun</label><br>
+            <label><input type="checkbox" name="symptom" value="batang berwarna coklat"> Batang berwarna coklat</label><br>
+            <button type="button" onclick="diagnose()">Diagnosa</button>
+        </form>
+        <div id="result" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        const diseases = {
+            "Busuk Leher Batang": ["bercak basah", "daun menguning", "batang lunak", "bau busuk", "pertumbuhan terhambat", "penyebaran cepat"],
+            "Penyakit Kerdil": ["pertumbuhan terhambat", "daun menguning", "daun keriting", "rambut akar berkurang", "pembentukan bulir berkurang", "tanaman rentan hama"],
+            "Tungro": ["daun menguning", "kerdil", "daun menggulung", "malai pendek"],
+            "Infeksi Fusarium": ["daun menguning", "tanaman layu", "pangkal batang busuk", "pertumbuhan kerdil", "akar membusuk", "kematian tanaman"],
+            "Noda Palsu": ["bulir berwarna hijau gelap", "bercak coklat pada daun"],
+            "Bercak Pelepah Daun": ["bercak abu\" pada batang", "bercak coklat pada pelepah daun", "daun mengering", "tanaman kerdil", "busuk pada pangkal batang"],
+            "Karat Daun": ["bercak kuning pada daun", "pustula berwarna kuning", "daun mengering"],
+            "Kuning Jerami": ["garis sempit pada daun", "garis membesar pada batang", "kebocoran cairan kuning"],
+            "Bercak Coklat": ["bercak coklat", "daun mengering"],
+            "Hawar Daun": ["tanaman kering", "garis kuning pada daun", "bercak coklat"]
+        };
+
+        function diagnose() {
+            const selectedSymptoms = Array.from(document.querySelectorAll('input[name="symptom"]:checked')).map(el => el.value);
+            let resultText = "Penyakit yang mungkin: <ul>";
+
+            for (const [disease, symptoms] of Object.entries(diseases)) {
+                if (selectedSymptoms.every(symptom => symptoms.includes(symptom))) {
+                    resultText += `<li>${disease}</li>`;
+                }
+            }
+
+            resultText += "</ul>";
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = resultText;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
